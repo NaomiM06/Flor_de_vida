@@ -139,6 +139,119 @@ Cada círculo se coloca sobre una circunferencia imaginaria de radio 3 centrada 
 
 Conclusión
 La imagen muestra el mismo algoritmo de generación procedural, pero con un incremento angular mayor. Esto reduce la cantidad de iteraciones del ciclo y, por lo tanto, el número de círculos creados. El resultado es un patrón más simple, con menos superposición y una apariencia similar a una flor de pocos pétalos.
+---------------
+--------------
+# Poligono
+-----------------
+Reporte de explicación del código
+
+Introducción
+El script mostrado en la imagen corresponde a un programa en Python ejecutado dentro de Blender cuyo objetivo es crear de manera procedural un polígono 2D regular. En el caso específico de la ejecución observada, el resultado es un hexágono. El código no utiliza primitivas predefinidas, sino que construye la geometría manualmente mediante la creación de vértices y aristas, lo que permite comprender el proceso interno de generación de mallas.
+
+1. Importación de módulos
+
+El programa inicia con la importación de dos bibliotecas:
+
+bpy
+Es la API oficial de Blender para Python. Permite crear y manipular objetos, mallas y elementos de la escena.
+
+math
+Proporciona funciones matemáticas necesarias para los cálculos trigonométricos, indispensables para posicionar los vértices del polígono usando coordenadas polares.
+
+2. Definición de la función crear_poligono_2d
+
+Se define una función que encapsula toda la lógica de construcción del polígono. Esta función recibe tres parámetros:
+
+nombre
+Nombre que tendrá la malla y el objeto en la escena.
+
+lados
+Cantidad de lados del polígono. Determina cuántos vértices se generarán.
+
+radio
+Distancia desde el centro hasta cada vértice, es decir, el tamaño del polígono.
+
+El uso de una función permite reutilizar el procedimiento para crear cualquier polígono regular simplemente cambiando estos valores.
+
+3. Creación de la malla y del objeto
+
+Dentro de la función se crean dos estructuras fundamentales:
+
+Una nueva malla mediante bpy.data.meshes.new
+Un nuevo objeto que contiene esa malla mediante bpy.data.objects.new
+
+Posteriormente el objeto se vincula a la colección activa de la escena para que sea visible y forme parte del entorno de trabajo.
+
+4. Inicialización de estructuras de datos
+
+Se crean dos listas vacías:
+
+vertices
+Almacenará las coordenadas tridimensionales de cada punto del polígono.
+
+aristas
+Guardará las conexiones entre los vértices, definiendo la forma del contorno.
+
+Estas listas se llenarán en los siguientes bloques del código.
+
+5. Cálculo de vértices usando coordenadas polares
+
+Se utiliza un ciclo for que recorre el número total de lados del polígono. En cada iteración se calcula el ángulo correspondiente al vértice actual mediante la fórmula:
+
+ángulo = 2π × i / lados
+
+Esta expresión divide la circunferencia completa en partes iguales, garantizando que el polígono sea regular.
+
+Luego se convierten las coordenadas polares a cartesianas:
+
+x = radio × cos(ángulo)
+y = radio × sin(ángulo)
+z = 0
+
+El valor de z se fija en cero para mantener la figura en un plano bidimensional.
+
+Cada coordenada calculada se agrega a la lista de vértices.
+
+6. Definición de las aristas
+
+Una vez creados los vértices, se establece la conectividad entre ellos. Se recorre nuevamente la cantidad de lados y se crea una arista que conecta cada vértice con el siguiente.
+
+La expresión (i + 1) % lados se utiliza para cerrar la figura, conectando el último vértice con el primero mediante la operación de módulo.
+
+Esto asegura que el contorno del polígono quede completamente cerrado.
+
+7. Construcción de la malla
+
+Los datos almacenados en las listas se cargan en la malla mediante el método from_pydata, que recibe:
+
+la lista de vértices
+la lista de aristas
+una lista de caras (vacía en este caso)
+
+Luego se llama a update para que Blender actualice la geometría y la muestre correctamente en la vista 3D.
+
+8. Limpieza de la escena
+
+Antes de crear el polígono, el script elimina todos los objetos existentes en la escena. Esto evita superposiciones y asegura que el resultado sea el único elemento visible.
+
+9. Llamada a la función
+
+Finalmente se invoca la función con los parámetros:
+
+nombre: Poligono2D
+lados: 6
+radio: 5
+
+Esto produce un polígono regular de seis lados, es decir, un hexágono, centrado en el origen y con tamaño definido por el radio.
+
+Resultado observado en la imagen
+
+En la vista 3D se aprecia un hexágono plano dibujado únicamente con sus aristas, sin caras rellenas. Esto se debe a que la lista de caras se dejó vacía, por lo que la malla contiene solo el contorno.
+-------------------------
+Conclusión
+El código demuestra cómo construir geometría en Blender desde un nivel fundamental, generando manualmente los vértices y sus conexiones. Este enfoque permite comprender la relación entre matemáticas, programación y modelado procedural. Además, la estructura modular mediante una función hace que el script sea reutilizable para crear polígonos regulares de cualquier número de lados y tamaño.
+<img width="1563" height="900" alt="image" src="https://github.com/user-attachments/assets/66d12ec8-aec8-4709-8c16-cdd24db00c75" />
+
 
 
 
